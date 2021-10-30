@@ -2,7 +2,7 @@ import React, {useRef} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
 import {useTexture, Loader} from "@react-three/drei"
 
-import imagen from "../assets/jirafa.png"
+import imagen from "../assets/menos.png"
 
 //Armado del cilindro
 function Cilindro(props) {
