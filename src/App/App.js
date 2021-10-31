@@ -1,6 +1,6 @@
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
-import {useTexture, Loader} from "@react-three/drei"
+import {useTexture, Loader, OrbitControls} from "@react-three/drei"
 
 //Importo imagen de la carpeta assets, solo cambio el nombre para elegir una panorámica
 import imagen from "../assets/foto_1.png"
@@ -11,14 +11,14 @@ function Cilindro(props) {
   const texture = useTexture(imagen)
 
   useFrame(() => {
-    //Para que solo rote en un sentido, para más rapidez aumentar 0.01
-    ref.current.rotation.y += 0.004
+    //Para que solo rote en un sentido, para más rapidez aumentar 0.004
+    //ref.current.rotation.y += 0.004
   })
 
   //Escala 1:1, args(radio sup,radio inf, altura, vértices, número de caras altura)
   return (
     <mesh {...props} ref={ref} scale={1}>
-      <cylinderGeometry args={[2, 2, 4, 100, 1]} />
+      <cylinderGeometry args={[2, 2, 4, 100, 1, true, 0, 3.105]} />
       <meshPhysicalMaterial map={texture} />
     </mesh>
   )
@@ -39,6 +39,12 @@ export default function App() {
 
           <Cilindro position={[0, 0, 0]} />
         </Suspense>
+        <OrbitControls //Hasta donde puede rotar el cilindro, en y no rota
+          maxAzimuthAngle={3}
+          maxPolarAngle={0}
+          minAzimuthAngle={0}
+          minPolarAngle={1.6}
+        />
       </Canvas>
       <Loader />
     </div>
