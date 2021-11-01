@@ -81,6 +81,7 @@ export default function App() {
           defaultValue={2.5}
           max={4}
           min={1}
+          step={0.00001}
           onChange={(num) => actualizarRadioSup(num)}
         >
           <SliderTrack>
@@ -96,6 +97,7 @@ export default function App() {
           defaultValue={2.5}
           max={4}
           min={1}
+          step={0.00001}
           onChange={(num) => actualizarRadioInf(num)}
         >
           <SliderTrack>
