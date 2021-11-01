@@ -78,9 +78,9 @@ export default function App() {
         <Slider
           aria-label="slider-ex-2" //Primer subidor, superior
           colorScheme="pink"
-          defaultValue={30}
-          max={9}
-          min={0.5}
+          defaultValue={2.5}
+          max={4}
+          min={1}
           onChange={(num) => actualizarRadioSup(num)}
         >
           <SliderTrack>
@@ -93,9 +93,9 @@ export default function App() {
         <Slider
           aria-label="slider-ex-2" //Segundo subidor, inferior
           colorScheme="blue"
-          defaultValue={30}
-          max={9}
-          min={0.5}
+          defaultValue={2.5}
+          max={4}
+          min={1}
           onChange={(num) => actualizarRadioInf(num)}
         >
           <SliderTrack>
