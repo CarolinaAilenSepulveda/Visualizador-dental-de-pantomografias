@@ -130,20 +130,31 @@ export default function App() {
             Radiografía
           </Box>
         </Center>
-        {imagenes.map(
-          (
-            elem, //Al tocar la imagen llama al metodo set y carga el url, la imagen queda seteada como botón
-          ) => (
-            <VStack
-              key={elem.id}
-              as="button"
-              onClick={() => setImagenseleccionada(elem.imagen.url)}
-            >
-              <Image src={elem.imagen.url} />
-              <Text>{elem.nombre}</Text>
-            </VStack>
-          ),
-        )}
+        {imagenes //Ordenar las imagenes por nombre, orden numérico
+          .sort(function (a, b) {
+            if (a.nombre > b.nombre) {
+              return 1
+            }
+            if (a.nombre < b.nombre) {
+              return -1
+            }
+
+            return 0
+          })
+          .map(
+            (
+              elem, //Al tocar la imagen llama al metodo set y carga el url, la imagen queda seteada como botón
+            ) => (
+              <VStack
+                key={elem.id}
+                as="button"
+                onClick={() => setImagenseleccionada(elem.imagen.url)}
+              >
+                <Image src={elem.imagen.url} />
+                <Text>{elem.nombre}</Text>
+              </VStack>
+            ),
+          )}
       </VStack>
       <div style={{position: "absolute", top: 90, left: 10, width: 100}}>
         <Slider
