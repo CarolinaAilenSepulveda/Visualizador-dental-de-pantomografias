@@ -1,29 +1,23 @@
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
 import {useTexture, Loader, OrbitControls} from "@react-three/drei"
-import {Center, Box, Slider, SliderTrack, SliderFilledTrack, SliderThumb} from "@chakra-ui/react"
+import {
+  Center,
+  Box,
+  HStack,
+  Image,
+  Text,
+  Slider,
+  SliderTrack,
+  SliderFilledTrack,
+  SliderThumb,
+  VStack,
+} from "@chakra-ui/react"
 
 //Importo imagen de la carpeta assets, solo cambio el nombre para elegir una panorámica
+import axios from "axios"
+
 import imagen from "../assets/foto_1.png"
-
-//Armado del cilindro
-function Cilindro(props) {
-  const ref = useRef()
-  const texture = useTexture(imagen)
-
-  useFrame(() => {
-    //Para que solo rote en un sentido, para más rapidez aumentar 0.004
-    //ref.current.rotation.y += 0.004
-  })
-
-  //Escala 1:1, args(radio sup,radio inf, altura, vértices, número de caras altura)
-  return (
-    <mesh {...props} ref={ref} scale={1}>
-      <cylinderGeometry args={[props.radioSup, props.radioInf, 4, 100, 1, true, 0, 3.105]} />
-      <meshPhysicalMaterial map={texture} />
-    </mesh>
-  )
-}
 
 //Armado escena
 //Acomodo color de fondo, intensidad, angulo y posición de la luz estándar, posición estándar del cilindro
@@ -33,6 +27,37 @@ export default function App() {
   const [radioSup, setRadioSup] = React.useState(2) //Estado radio superior
   const [update, setUpdate] = React.useState(false) //Renovación de estado
   const [radioInf, setRadioInf] = React.useState(2) //Estado radio inferior
+  const [imagenes, setImagenes] = React.useState([]) //Estado de imagen
+  const [loadImage, setLoadImage] = React.useState(false) //Cargar imagenes
+  const [imagenseleccionada, setImagenseleccionada] = React.useState("") //Estado para ir modificando sobre el cilindro
+
+  //Armado del cilindro
+  function Cilindro(props) {
+    const ref = useRef()
+    const texture = useTexture(imagenseleccionada == "" ? imagen : imagenseleccionada) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
+
+    useFrame(() => {
+      //Para que solo rote en un sentido, para más rapidez aumentar 0.004
+      //ref.current.rotation.y += 0.004
+    })
+
+    //Escala 1:1, args(radio sup,radio inf, altura, vértices, número de caras altura)
+    return (
+      <mesh {...props} ref={ref} scale={1}>
+        <cylinderGeometry args={[props.radioSup, props.radioInf, 4, 100, 1, true, 0, 3.105]} />
+        <meshPhysicalMaterial map={texture} />
+      </mesh>
+    )
+  }
+
+  React.useEffect(() => {
+    if (!loadImage) {
+      axios
+        .get("https://dientes-sepulveda.herokuapp.com/imagen-dientes") //URL base de datos
+        .then((response) => setImagenes(response.data))
+      setLoadImage(true)
+    }
+  }, [loadImage])
 
   //Función actualizar radio superior
   const actualizarRadioSup = (num) => {
@@ -90,6 +115,36 @@ export default function App() {
           <SliderThumb />
         </Slider>
       </div>
+      <VStack //Para que se acomoden vertical y vaya bajando
+        style={{
+          top: 200,
+          right: 10,
+          height: "500px",
+          width: "200px",
+          position: "absolute",
+          overflowY: "scroll", //No utilizo el eje x para deslizar
+        }}
+      >
+        <Center color="grey" h="100px" w="100px">
+          <Box as="span" fontSize="lg" fontWeight="bold">
+            Radiografía
+          </Box>
+        </Center>
+        {imagenes.map(
+          (
+            elem, //Al tocar la imagen llama al metodo set y carga el url, la imagen queda seteada como botón
+          ) => (
+            <VStack
+              key={elem.id}
+              as="button"
+              onClick={() => setImagenseleccionada(elem.imagen.url)}
+            >
+              <Image src={elem.imagen.url} />
+              <Text>{elem.nombre}</Text>
+            </VStack>
+          ),
+        )}
+      </VStack>
       <div style={{position: "absolute", top: 90, left: 10, width: 100}}>
         <Slider
           aria-label="slider-ex-2" //Segundo subidor, inferior
