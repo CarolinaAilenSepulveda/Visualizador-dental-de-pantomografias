@@ -30,6 +30,10 @@ export default function App() {
   const [imagenes, setImagenes] = React.useState([]) //Estado de imagen
   const [loadImage, setLoadImage] = React.useState(false) //Cargar imagenes
   const [imagenseleccionada, setImagenseleccionada] = React.useState("") //Estado para ir modificando sobre el cilindro
+  const [fsepia, setFSepia] = React.useState(0) //Setear valor de sepia
+  const [fbyn, setFbyn] = React.useState(0) //Setear valor de byn
+  const [finversion, setFinversion] = React.useState(0) //Setear valor de inversión
+  const [fhue, setFhue] = React.useState(0) //Setear valor de hue
 
   //Armado del cilindro
   function Cilindro(props) {
@@ -45,6 +49,7 @@ export default function App() {
     return (
       <mesh {...props} ref={ref} scale={1}>
         <cylinderGeometry args={[props.radioSup, props.radioInf, 4, 100, 1, true, 0, 3.105]} />
+
         <meshPhysicalMaterial map={texture} />
       </mesh>
     )
@@ -69,6 +74,24 @@ export default function App() {
     setRadioInf(num)
     setUpdate(true)
   }
+  //Funciones actualizadoras filtros
+  const actualizarSepia = (n) => {
+    setFSepia(n)
+    setUpdate(true)
+  }
+  const actualizarbyn = (n) => {
+    setFbyn(n)
+    setUpdate(true)
+  }
+
+  const actualizarinversion = (n) => {
+    setFinversion(n)
+    setUpdate(true)
+  }
+  const actualizarhue = (n) => {
+    setFhue(n)
+    setUpdate(true)
+  }
 
   //Función efecto de actualizar
   React.useEffect(() => {
@@ -77,26 +100,42 @@ export default function App() {
     }
   }, [update])
 
+  // filter: `${}%`
+
   return (
     <div
-      style={{width: "100%", backgroundColor: "lightblue", height: "100vh", position: "relative"}}
+      style={{
+        width: "100%",
+        backgroundColor: "lightblue",
+        height: "100vh",
+        position: "relative",
+      }}
+      //sepia(100%), grayscale,contrast,hue-rotate(90deg),opacity(30%)"invert(200%)",saturate,filter: "contrast(200%) brightness(150%)",
     >
-      <Canvas>
-        <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <spotLight angle={0.15} penumbra={1} position={[10, 10, 10]} />
-          <pointLight position={[-10, -10, -10]} />
+      <div
+        style={{
+          filter: `sepia(${fsepia}%) grayscale(${fbyn}%) invert(${finversion}%) hue-rotate(${fhue}deg)`,
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <Canvas>
+          <Suspense fallback={null}>
+            <ambientLight intensity={0.5} />
+            <spotLight angle={0.15} penumbra={1} position={[10, 10, 10]} />
+            <pointLight position={[-10, -10, -10]} />
 
-          <Cilindro position={[0, 0, 0]} radioInf={radioInf} radioSup={radioSup} />
-        </Suspense>
-        <OrbitControls //Hasta donde puede rotar el cilindro, en y no rota
-          maxAzimuthAngle={3}
-          maxPolarAngle={0}
-          minAzimuthAngle={0}
-          minPolarAngle={1.6}
-        />
-      </Canvas>
+            <Cilindro position={[0, 0, 0]} radioInf={radioInf} radioSup={radioSup} />
+          </Suspense>
 
+          <OrbitControls //Hasta donde puede rotar el cilindro, en y no rota
+            maxAzimuthAngle={3}
+            maxPolarAngle={0}
+            minAzimuthAngle={0}
+            minPolarAngle={1.6}
+          />
+        </Canvas>
+      </div>
       <Loader />
 
       <div style={{position: "absolute", top: 90, right: 10, width: 100}}>
@@ -172,6 +211,84 @@ export default function App() {
           <SliderThumb />
         </Slider>
       </div>
+
+      <div style={{position: "absolute", top: 200, left: 10, width: 100}}>
+        <Box as="span" fontSize="lg" fontWeight="bold">
+          Sepia
+        </Box>
+        <Slider
+          aria-label="slider-ex-2" //Subidor sepia
+          colorScheme="green"
+          defaultValue={0}
+          max={100}
+          min={0}
+          step={0.00001}
+          onChange={(n) => actualizarSepia(n)}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+      </div>
+      <div style={{position: "absolute", top: 300, left: 10, width: 100}}>
+        <Box as="span" fontSize="lg" fontWeight="bold">
+          Escala grises
+        </Box>
+        <Slider
+          aria-label="slider-ex-2" //Subidor byn
+          colorScheme="green"
+          defaultValue={0}
+          max={100}
+          min={0}
+          step={0.00001}
+          onChange={(n) => actualizarbyn(n)}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+      </div>
+      <div style={{position: "absolute", top: 400, left: 10, width: 100}}>
+        <Box as="span" fontSize="lg" fontWeight="bold">
+          Inversión
+        </Box>
+        <Slider
+          aria-label="slider-ex-2" //Subidor inversión
+          colorScheme="green"
+          defaultValue={0}
+          max={100}
+          min={0}
+          step={0.00001}
+          onChange={(n) => actualizarinversion(n)}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+      </div>
+      <div style={{position: "absolute", top: 500, left: 10, width: 100}}>
+        <Box as="span" fontSize="lg" fontWeight="bold">
+          Hue-rotate
+        </Box>
+        <Slider
+          aria-label="slider-ex-2" //Subidor hue
+          colorScheme="green"
+          defaultValue={0}
+          max={360}
+          min={0}
+          step={0.00001}
+          onChange={(n) => actualizarhue(n)}
+        >
+          <SliderTrack>
+            <SliderFilledTrack />
+          </SliderTrack>
+          <SliderThumb />
+        </Slider>
+      </div>
+
       <div style={{position: "absolute", top: 10, right: 10, width: 100}}>
         <Center bg="hotpink" color="white" h="60px" w="80px">
           <Box as="span" fontSize="lg" fontWeight="bold">
