@@ -285,19 +285,21 @@ export default function App() {
             Procesar
           </Button>
         </div>
-        <div style={{position: "absolute", bottom: 20, right: 10, width: 100}}>
-          <Button
-            colorScheme="teal"
-            size="lg"
-            variant="outline"
-            onClick={() => {
-              changePage("Panoramica")
-            }}
-          >
-            Atrás
-          </Button>
-        </div>
       </Container>
+
+      <Button
+        bottom={20}
+        colorScheme="teal"
+        position="absolute"
+        right={10}
+        size="lg"
+        variant="outline"
+        onClick={() => {
+          changePage("Panoramica")
+        }}
+      >
+        Atrás
+      </Button>
     </div>
   )
 }
