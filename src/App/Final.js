@@ -34,47 +34,27 @@ export default function Final() {
         position: "relative",
       }}
     >
-      <div
-        style={{
-          height: "100vh",
-          width: "100%",
-        }}
-      >
-        <Canvas>
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
-            <spotLight angle={0.15} penumbra={1} position={[10, 10, 10]} />
-            <pointLight position={[-10, -10, -10]} />
-          </Suspense>
-        </Canvas>
-      </div>
-      <Container maxW="container.xl">
-        <VStack>
-          <Text
-            bottom={620}
-            color="teal"
-            fontFamily="monospace"
-            fontSize="6xl"
-            left={350}
-            position="absolute"
-          >
+      <Container height="100%" maxW="8xl" widht="100%">
+        <VStack height="100%" paddingTop="50" spacing="20px">
+          <Text color="teal" fontFamily="monospace" fontSize="6xl">
             Pantomografía procesada
           </Text>
-          <Image position="absolute" right={450} src={imagen} top={200} />
-          <div style={{position: "absolute", bottom: 20, right: 10, width: 100}}>
-            <Button
-              colorScheme="teal"
-              size="lg"
-              variant="outline"
-              onClick={() => {
-                changePage("App")
-              }}
-            >
-              Atrás
-            </Button>
-          </div>
+          <Image src={imagen} />
         </VStack>
       </Container>
+      <Button
+        bottom={20}
+        colorScheme="teal"
+        position="absolute"
+        right={10}
+        size="lg"
+        variant="outline"
+        onClick={() => {
+          changePage("App")
+        }}
+      >
+        Atrás
+      </Button>
     </div>
   )
 }

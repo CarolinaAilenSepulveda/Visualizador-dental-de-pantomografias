@@ -34,48 +34,33 @@ export default function Panoramica() {
         position: "relative",
       }}
     >
-      <div
-        style={{
-          height: "100vh",
-          width: "100%",
-        }}
-      >
-        <Canvas>
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
-            <spotLight angle={0.15} penumbra={1} position={[10, 10, 10]} />
-            <pointLight position={[-10, -10, -10]} />
-          </Suspense>
-        </Canvas>
-      </div>
-      <Container maxW="container.xl">
-        <VStack>
-          <div style={{position: "absolute", bottom: 200, left: 700, width: 100}}>
-            <Button
-              colorScheme="teal"
-              size="lg"
-              onClick={() => {
-                changePage("App")
-              }}
-            >
-              Visualizar
-            </Button>
-          </div>
-          <Image bottom={300} left={450} position="absolute" src={imagen} />
-          <div style={{position: "absolute", bottom: 20, right: 10, width: 100}}>
-            <Button
-              colorScheme="teal"
-              size="lg"
-              variant="outline"
-              onClick={() => {
-                changePage("Bienvenida")
-              }}
-            >
-              Atrás
-            </Button>
-          </div>
+      <Container height="100%" maxW="8xl">
+        <VStack height="100%" paddingTop="200" spacing="20px">
+          <Image src={imagen} />
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              changePage("App")
+            }}
+          >
+            Visualizar
+          </Button>
         </VStack>
       </Container>
+      <Button
+        bottom={20}
+        colorScheme="teal"
+        position="absolute"
+        right={10}
+        size="lg"
+        variant="outline"
+        onClick={() => {
+          changePage("Bienvenida")
+        }}
+      >
+        Atrás
+      </Button>
     </div>
   )
 }

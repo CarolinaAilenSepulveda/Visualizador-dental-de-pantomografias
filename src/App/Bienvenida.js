@@ -32,43 +32,20 @@ export default function Bienvenida() {
         position: "relative",
       }}
     >
-      <div
-        style={{
-          height: "100vh",
-          width: "100%",
-        }}
-      >
-        <Canvas>
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.5} />
-            <spotLight angle={0.15} penumbra={1} position={[10, 10, 10]} />
-            <pointLight position={[-10, -10, -10]} />
-          </Suspense>
-        </Canvas>
-      </div>
-      <Container maxW="container.xl">
-        <VStack>
-          <div style={{position: "absolute", bottom: 200, left: 700, width: 100}}>
-            <Button
-              colorScheme="teal"
-              size="lg"
-              onClick={() => {
-                changePage("Panoramica")
-              }}
-            >
-              Siguiente
-            </Button>
-          </div>
-          <Text
-            bottom={400}
-            color="teal"
-            fontFamily="monospace"
-            fontSize="8xl"
-            left={500}
-            position="absolute"
-          >
+      <Container height="100%" maxW="8xl">
+        <VStack paddingTop="200" spacing="20px">
+          <Text color="teal" fontFamily="monospace" fontSize="8xl">
             Bienvenida
           </Text>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              changePage("Panoramica")
+            }}
+          >
+            Siguiente
+          </Button>
         </VStack>
       </Container>
     </div>
