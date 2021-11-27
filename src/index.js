@@ -2,14 +2,17 @@ import React from "react"
 import ReactDOM from "react-dom"
 import {ChakraProvider} from "@chakra-ui/react"
 
-import App from "./App/App"
+import {Provider as UserProvider} from "./App/Context"
+import Orden from "./App/Orden"
 import "./theme.css"
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <UserProvider>
+      <ChakraProvider>
+        <Orden />
+      </ChakraProvider>
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById("root"),
 )

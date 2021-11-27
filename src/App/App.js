@@ -12,12 +12,16 @@ import {
   SliderFilledTrack,
   SliderThumb,
   VStack,
+  Button,
+  Container,
 } from "@chakra-ui/react"
 
 //Importo imagen de la carpeta assets, solo cambio el nombre para elegir una panorámica
 import axios from "axios"
 
-import imagen from "../assets/foto_1.png"
+import imagen from "../assets/foto1.png"
+
+import {usePage, useChangePage} from "./Hooks"
 
 //Armado escena
 //Acomodo color de fondo, intensidad, angulo y posición de la luz estándar, posición estándar del cilindro
@@ -38,7 +42,8 @@ export default function App() {
   //Armado del cilindro
   function Cilindro(props) {
     const ref = useRef()
-    const texture = useTexture(imagenseleccionada == "" ? imagen : imagenseleccionada) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
+    // const texture = useTexture(imagenseleccionada == "" ? imagen : imagenseleccionada) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
+    const texture = useTexture(imagen)
 
     useFrame(() => {
       //Para que solo rote en un sentido, para más rapidez aumentar 0.004
@@ -55,14 +60,14 @@ export default function App() {
     )
   }
 
-  React.useEffect(() => {
-    if (!loadImage) {
-      axios
-        .get("https://dientes-sepulveda.herokuapp.com/imagen-dientes") //URL base de datos
-        .then((response) => setImagenes(response.data))
-      setLoadImage(true)
-    }
-  }, [loadImage])
+  // React.useEffect(() => {
+  // if (!loadImage) {
+  //  axios
+  //   .get("https://dientes-sepulveda.herokuapp.com/imagen-dientes") //URL base de datos
+  //   .then((response) => setImagenes(response.data))
+  // setLoadImage(true)
+  // }
+  // }, [loadImage])
 
   //Función actualizar radio superior
   const actualizarRadioSup = (num) => {
@@ -93,12 +98,17 @@ export default function App() {
     setUpdate(true)
   }
 
+  const page = usePage()
+  const changePage = useChangePage()
+
+  console.log(page)
+
   //Función efecto de actualizar
-  React.useEffect(() => {
-    if (update) {
-      setUpdate(false)
-    }
-  }, [update])
+  // React.useEffect(() => {
+  // if (update) {
+  //  setUpdate(false)
+  // }
+  // }, [update])
 
   // filter: `${}%`
 
@@ -136,173 +146,202 @@ export default function App() {
           />
         </Canvas>
       </div>
+
       <Loader />
+      <Container maxW="container.xl">
+        <div style={{position: "absolute", top: 90, right: 10, width: 100}}>
+          <Slider
+            aria-label="slider-ex-2" //Primer subidor, superior
+            colorScheme="pink"
+            defaultValue={2.5}
+            max={4}
+            min={1}
+            step={0.00001}
+            onChange={(num) => actualizarRadioSup(num)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </div>
 
-      <div style={{position: "absolute", top: 90, right: 10, width: 100}}>
-        <Slider
-          aria-label="slider-ex-2" //Primer subidor, superior
-          colorScheme="pink"
-          defaultValue={2.5}
-          max={4}
-          min={1}
-          step={0.00001}
-          onChange={(num) => actualizarRadioSup(num)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </div>
-      <VStack //Para que se acomoden vertical y vaya bajando
-        style={{
-          top: 200,
-          right: 10,
-          height: "500px",
-          width: "200px",
-          position: "absolute",
-          overflowY: "scroll", //No utilizo el eje x para deslizar
-        }}
-      >
-        <Center color="grey" h="100px" w="100px">
+        <div style={{position: "absolute", top: 90, left: 10, width: 100}}>
+          <Slider
+            aria-label="slider-ex-2" //Segundo subidor, inferior
+            colorScheme="blue"
+            defaultValue={2.5}
+            max={4}
+            min={1}
+            step={0.00001}
+            onChange={(num) => actualizarRadioInf(num)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </div>
+
+        <div style={{position: "absolute", top: 200, left: 10, width: 100}}>
           <Box as="span" fontSize="lg" fontWeight="bold">
-            Radiografía
+            Sepia
           </Box>
-        </Center>
-        {imagenes //Ordenar las imagenes por nombre, orden numérico
-          .sort(function (a, b) {
-            if (a.nombre > b.nombre) {
-              return 1
-            }
-            if (a.nombre < b.nombre) {
-              return -1
-            }
-
-            return 0
-          })
-          .map(
-            (
-              elem, //Al tocar la imagen llama al metodo set y carga el url, la imagen queda seteada como botón
-            ) => (
-              <VStack
-                key={elem.id}
-                as="button"
-                onClick={() => setImagenseleccionada(elem.imagen.url)}
-              >
-                <Image src={elem.imagen.url} />
-                <Text>{elem.nombre}</Text>
-              </VStack>
-            ),
-          )}
-      </VStack>
-      <div style={{position: "absolute", top: 90, left: 10, width: 100}}>
-        <Slider
-          aria-label="slider-ex-2" //Segundo subidor, inferior
-          colorScheme="blue"
-          defaultValue={2.5}
-          max={4}
-          min={1}
-          step={0.00001}
-          onChange={(num) => actualizarRadioInf(num)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </div>
-
-      <div style={{position: "absolute", top: 200, left: 10, width: 100}}>
-        <Box as="span" fontSize="lg" fontWeight="bold">
-          Sepia
-        </Box>
-        <Slider
-          aria-label="slider-ex-2" //Subidor sepia
-          colorScheme="green"
-          defaultValue={0}
-          max={100}
-          min={0}
-          step={0.00001}
-          onChange={(n) => actualizarSepia(n)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </div>
-      <div style={{position: "absolute", top: 300, left: 10, width: 100}}>
-        <Box as="span" fontSize="lg" fontWeight="bold">
-          Escala grises
-        </Box>
-        <Slider
-          aria-label="slider-ex-2" //Subidor byn
-          colorScheme="green"
-          defaultValue={0}
-          max={100}
-          min={0}
-          step={0.00001}
-          onChange={(n) => actualizarbyn(n)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </div>
-      <div style={{position: "absolute", top: 400, left: 10, width: 100}}>
-        <Box as="span" fontSize="lg" fontWeight="bold">
-          Inversión
-        </Box>
-        <Slider
-          aria-label="slider-ex-2" //Subidor inversión
-          colorScheme="green"
-          defaultValue={0}
-          max={100}
-          min={0}
-          step={0.00001}
-          onChange={(n) => actualizarinversion(n)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </div>
-      <div style={{position: "absolute", top: 500, left: 10, width: 100}}>
-        <Box as="span" fontSize="lg" fontWeight="bold">
-          Hue-rotate
-        </Box>
-        <Slider
-          aria-label="slider-ex-2" //Subidor hue
-          colorScheme="green"
-          defaultValue={0}
-          max={360}
-          min={0}
-          step={0.00001}
-          onChange={(n) => actualizarhue(n)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </div>
-
-      <div style={{position: "absolute", top: 10, right: 10, width: 100}}>
-        <Center bg="hotpink" color="white" h="60px" w="80px">
+          <Slider
+            aria-label="slider-ex-2" //Subidor sepia
+            colorScheme="green"
+            defaultValue={0}
+            max={100}
+            min={0}
+            step={0.00001}
+            onChange={(n) => actualizarSepia(n)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </div>
+        <div style={{position: "absolute", top: 300, left: 10, width: 100}}>
           <Box as="span" fontSize="lg" fontWeight="bold">
-            Radio superior
+            Escala grises
           </Box>
-        </Center>
-      </div>
-      <div style={{position: "absolute", top: 10, left: 10, width: 100}}>
-        <Center bg="blue" color="white" h="60px" w="80px">
+          <Slider
+            aria-label="slider-ex-2" //Subidor byn
+            colorScheme="green"
+            defaultValue={0}
+            max={100}
+            min={0}
+            step={0.00001}
+            onChange={(n) => actualizarbyn(n)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </div>
+        <div style={{position: "absolute", top: 400, left: 10, width: 100}}>
           <Box as="span" fontSize="lg" fontWeight="bold">
-            Radio inferior
+            Inversión
           </Box>
-        </Center>
-      </div>
+          <Slider
+            aria-label="slider-ex-2" //Subidor inversión
+            colorScheme="green"
+            defaultValue={0}
+            max={100}
+            min={0}
+            step={0.00001}
+            onChange={(n) => actualizarinversion(n)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </div>
+        <div style={{position: "absolute", top: 500, left: 10, width: 100}}>
+          <Box as="span" fontSize="lg" fontWeight="bold">
+            Hue-rotate
+          </Box>
+          <Slider
+            aria-label="slider-ex-2" //Subidor hue
+            colorScheme="green"
+            defaultValue={0}
+            max={360}
+            min={0}
+            step={0.00001}
+            onChange={(n) => actualizarhue(n)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb />
+          </Slider>
+        </div>
+
+        <div style={{position: "absolute", top: 10, right: 10, width: 100}}>
+          <Center bg="hotpink" color="white" h="60px" w="80px">
+            <Box as="span" fontSize="lg" fontWeight="bold">
+              Radio superior
+            </Box>
+          </Center>
+        </div>
+        <div style={{position: "absolute", top: 10, left: 10, width: 100}}>
+          <Center bg="blue" color="white" h="60px" w="80px">
+            <Box as="span" fontSize="lg" fontWeight="bold">
+              Radio inferior
+            </Box>
+          </Center>
+        </div>
+        <div style={{position: "absolute", top: 200, right: 40, width: 100}}>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              changePage("Final")
+            }}
+          >
+            Procesar
+          </Button>
+        </div>
+        <div style={{position: "absolute", bottom: 20, right: 10, width: 100}}>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            variant="outline"
+            onClick={() => {
+              changePage("Panoramica")
+            }}
+          >
+            Atrás
+          </Button>
+        </div>
+      </Container>
     </div>
   )
 }
+
+//Seleccionador de radiografia
+
+//<VStack //Para que se acomoden vertical y vaya bajando
+//   style={{
+//    top: 200,
+//    right: 10,
+//  height: "500px",
+//    width: "200px",
+//   position: "absolute",
+//  overflowY: "scroll", //No utilizo el eje x para deslizar
+// }}
+//  >
+//  <Center color="grey" h="100px" w="100px">
+//   <Box as="span" fontSize="lg" fontWeight="bold">
+//    Radiografía
+//  </Box>
+// </Center>
+//  {imagenes //Ordenar las imagenes por nombre, orden numérico
+//   .sort(function (a, b) {
+//   if (a.nombre > b.nombre) {
+//    return 1
+//   }
+//   if (a.nombre < b.nombre) {
+//     return -1
+//  }
+
+//   return 0
+//  })
+//  .map(
+//    (
+//    elem, //Al tocar la imagen llama al metodo set y carga el url, la imagen queda seteada como botón
+//  ) => (
+//   <VStack
+//    key={elem.id}
+//    as="button"
+//   onClick={() => setImagenseleccionada(elem.imagen.url)}
+//  >
+// <Image src={elem.imagen.url} />
+//   <Text>{elem.nombre}</Text>
+//   </VStack>
+// ),
+// )}
+// </VStack>
