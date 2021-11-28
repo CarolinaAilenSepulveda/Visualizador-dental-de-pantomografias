@@ -35,11 +35,29 @@ export default function Final() {
       }}
     >
       <Container height="100%" maxW="8xl" widht="100%">
-        <VStack height="100%" paddingTop="50" spacing="20px">
+        <VStack height="100%" paddingTop="30" spacing="15px">
           <Text color="teal" fontFamily="monospace" fontSize="6xl">
             Pantomografía procesada
           </Text>
           <Image src={imagen} />
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              changePage("Nega")
+            }}
+          >
+            Negatoscopio
+          </Button>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => {
+              changePage("Diagnostico")
+            }}
+          >
+            Ver diagnóstico
+          </Button>
         </VStack>
       </Container>
       <Button
@@ -50,7 +68,7 @@ export default function Final() {
         size="lg"
         variant="outline"
         onClick={() => {
-          changePage("App")
+          changePage("Panoramica")
         }}
       >
         Atrás

@@ -15,11 +15,9 @@ import {
   Container,
 } from "@chakra-ui/react"
 
-import imagen from "../assets/foto1.png"
-
 import {usePage, useChangePage} from "./Hooks"
 
-export default function Panoramica() {
+export default function Diagnostico() {
   const page = usePage()
   const changePage = useChangePage()
 
@@ -35,26 +33,10 @@ export default function Panoramica() {
       }}
     >
       <Container height="100%" maxW="8xl">
-        <VStack height="100%" paddingTop="200" spacing="20px">
-          <Image src={imagen} />
-          <Button
-            colorScheme="teal"
-            size="lg"
-            onClick={() => {
-              changePage("App")
-            }}
-          >
-            Negatoscopio
-          </Button>
-          <Button
-            colorScheme="teal"
-            size="lg"
-            onClick={() => {
-              changePage("Final")
-            }}
-          >
-            Procesar
-          </Button>
+        <VStack paddingTop="200" spacing="20px">
+          <Text color="teal" fontFamily="monospace" fontSize="8xl">
+            Diagnóstico
+          </Text>
         </VStack>
       </Container>
       <Button
@@ -65,7 +47,7 @@ export default function Panoramica() {
         size="lg"
         variant="outline"
         onClick={() => {
-          changePage("Bienvenida")
+          changePage("Final")
         }}
       >
         Atrás
