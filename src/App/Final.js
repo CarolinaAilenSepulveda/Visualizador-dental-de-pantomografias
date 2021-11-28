@@ -35,10 +35,7 @@ export default function Final() {
       }}
     >
       <Container height="100%" maxW="8xl" widht="100%">
-        <VStack height="100%" paddingTop="30" spacing="15px">
-          <Text color="teal" fontFamily="monospace" fontSize="6xl">
-            Pantomografía procesada
-          </Text>
+        <VStack height="100%" paddingTop="100" spacing="20px">
           <Image src={imagen} />
           <Button
             colorScheme="teal"
