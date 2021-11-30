@@ -27,7 +27,7 @@ import {usePage, useChangePage} from "./Hooks"
 //Acomodo color de fondo, intensidad, angulo y posición de la luz estándar, posición estándar del cilindro
 //Centro el cilindro en el medio de la escena
 
-export default function App({direccion}) {
+export default function Nega2({direccion}) {
   const [radioSup, setRadioSup] = React.useState(2) //Estado radio superior
   const [update, setUpdate] = React.useState(false) //Renovación de estado
   const [radioInf, setRadioInf] = React.useState(2) //Estado radio inferior
@@ -284,7 +284,7 @@ export default function App({direccion}) {
         size="lg"
         variant="outline"
         onClick={() => {
-          changePage("Panoramica")
+          changePage("Final2")
         }}
       >
         Atrás
@@ -292,47 +292,3 @@ export default function App({direccion}) {
     </div>
   )
 }
-
-//Seleccionador de radiografia
-
-//<VStack //Para que se acomoden vertical y vaya bajando
-//   style={{
-//    top: 200,
-//    right: 10,
-//  height: "500px",
-//    width: "200px",
-//   position: "absolute",
-//  overflowY: "scroll", //No utilizo el eje x para deslizar
-// }}
-//  >
-//  <Center color="grey" h="100px" w="100px">
-//   <Box as="span" fontSize="lg" fontWeight="bold">
-//    Radiografía
-//  </Box>
-// </Center>
-//  {imagenes //Ordenar las imagenes por nombre, orden numérico
-//   .sort(function (a, b) {
-//   if (a.nombre > b.nombre) {
-//    return 1
-//   }
-//   if (a.nombre < b.nombre) {
-//     return -1
-//  }
-
-//   return 0
-//  })
-//  .map(
-//    (
-//    elem, //Al tocar la imagen llama al metodo set y carga el url, la imagen queda seteada como botón
-//  ) => (
-//   <VStack
-//    key={elem.id}
-//    as="button"
-//   onClick={() => setImagenseleccionada(elem.imagen.url)}
-//  >
-// <Image src={elem.imagen.url} />
-//   <Text>{elem.nombre}</Text>
-//   </VStack>
-// ),
-// )}
-// </VStack>

@@ -19,7 +19,7 @@ import {
 //Importo imagen de la carpeta assets, solo cambio el nombre para elegir una panorámica
 import axios from "axios"
 
-import imagen from "../assets/resultado1.png"
+//import imagen from "../assets/foto1.png"
 
 import {usePage, useChangePage} from "./Hooks"
 
@@ -27,7 +27,7 @@ import {usePage, useChangePage} from "./Hooks"
 //Acomodo color de fondo, intensidad, angulo y posición de la luz estándar, posición estándar del cilindro
 //Centro el cilindro en el medio de la escena
 
-export default function Nega() {
+export default function Nega({direccion}) {
   const [radioSup, setRadioSup] = React.useState(2) //Estado radio superior
   const [update, setUpdate] = React.useState(false) //Renovación de estado
   const [radioInf, setRadioInf] = React.useState(2) //Estado radio inferior
@@ -43,7 +43,7 @@ export default function Nega() {
   function Cilindro(props) {
     const ref = useRef()
     // const texture = useTexture(imagenseleccionada == "" ? imagen : imagenseleccionada) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
-    const texture = useTexture(imagen)
+    const texture = useTexture(direccion)
 
     useFrame(() => {
       //Para que solo rote en un sentido, para más rapidez aumentar 0.004
