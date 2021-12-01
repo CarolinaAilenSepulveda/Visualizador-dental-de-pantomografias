@@ -15,11 +15,11 @@ import {
   Container,
 } from "@chakra-ui/react"
 
-import imagen from "../assets/resultado1.png"
+//import imagen from "../assets/resultado1.png"
 
 import {usePage, useChangePage} from "./Hooks"
 
-export default function Final() {
+export default function Final({imagen}) {
   const page = usePage()
   const changePage = useChangePage()
 
@@ -41,7 +41,13 @@ export default function Final() {
             colorScheme="teal"
             size="lg"
             onClick={() => {
-              changePage("Nega")
+              page === "Final"
+                ? changePage("Nega")
+                : page == "Final2"
+                ? changePage("Nega2")
+                : page == "Final3"
+                ? changePage("Nega3")
+                : changePage("Nega4")
             }}
           >
             Negatoscopio
@@ -50,7 +56,13 @@ export default function Final() {
             colorScheme="teal"
             size="lg"
             onClick={() => {
-              changePage("Diagnostico")
+              page === "Final"
+                ? changePage("Diag1")
+                : page == "Final2"
+                ? changePage("Diag2")
+                : page == "Final3"
+                ? changePage("Diag3")
+                : changePage("Diag4")
             }}
           >
             Ver diagnóstico

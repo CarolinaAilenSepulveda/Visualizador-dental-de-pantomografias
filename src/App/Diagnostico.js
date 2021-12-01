@@ -17,7 +17,7 @@ import {
 
 import {usePage, useChangePage} from "./Hooks"
 
-export default function Diagnostico() {
+export default function Diagnostico({imagen}) {
   const page = usePage()
   const changePage = useChangePage()
 
@@ -33,10 +33,8 @@ export default function Diagnostico() {
       }}
     >
       <Container height="100%" maxW="8xl">
-        <VStack paddingTop="200" spacing="20px">
-          <Text color="teal" fontFamily="monospace" fontSize="8xl">
-            Diagnóstico
-          </Text>
+        <VStack paddingTop="100" spacing="20px">
+          <Image src={imagen} />
         </VStack>
       </Container>
       <Button
@@ -47,7 +45,13 @@ export default function Diagnostico() {
         size="lg"
         variant="outline"
         onClick={() => {
-          changePage("Final")
+          page === "Diag1"
+            ? changePage("Final")
+            : page == "Diag2"
+            ? changePage("Final2")
+            : page == "Diag3"
+            ? changePage("Final3")
+            : changePage("Final4")
         }}
       >
         Atrás

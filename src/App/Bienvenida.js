@@ -33,9 +33,19 @@ export default function Bienvenida() {
       }}
     >
       <Container height="100%" maxW="8xl">
-        <VStack paddingTop="200" spacing="20px">
-          <Text color="teal" fontFamily="monospace" fontSize="8xl">
-            Bienvenida
+        <VStack paddingTop="100" spacing="30px">
+          <Text color="green.500" fontFamily="monospace" fontSize="5xl">
+            Diagnóstico de pantomografías mediante el uso de inteligencia artificial y aprendizaje
+            profundo
+          </Text>
+          <Text color="teal" fontFamily="monospace" fontSize="3xl">
+            Proyecto en desarrolo de un dispositivo para el diagnóstico automático y visualización
+            de radiografías panorámicas.
+          </Text>
+          <Text color="teal" fontFamily="monospace" fontSize="3xl">
+            Creado por un equipo interdisciplinario con investigadores Conicet y el Departamento de
+            Ingeniería Eléctrica y Computadoras de la Universidad del Sur, supervisado por
+            especialistas en diagnóstico por imágenes bucomaxilofacial de la Universidad de Bs As.
           </Text>
           <Button
             colorScheme="teal"

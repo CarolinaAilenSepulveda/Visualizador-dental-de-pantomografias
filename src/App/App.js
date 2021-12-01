@@ -135,13 +135,18 @@ export default function App({direccion}) {
             <spotLight angle={0.15} penumbra={1} position={[10, 10, 10]} />
             <pointLight position={[-10, -10, -10]} />
 
-            <Cilindro position={[0, 0, 0]} radioInf={radioInf} radioSup={radioSup} />
+            <Cilindro
+              position={[0, 0, 0]}
+              radioInf={radioInf}
+              radioSup={radioSup}
+              rotation={[0, -1.5, 0]}
+            />
           </Suspense>
 
           <OrbitControls //Hasta donde puede rotar el cilindro, en y no rota
-            maxAzimuthAngle={3}
+            maxAzimuthAngle={1.5} //3
             maxPolarAngle={0}
-            minAzimuthAngle={0}
+            minAzimuthAngle={-1.5} //0
             minPolarAngle={1.6}
           />
         </Canvas>
@@ -284,7 +289,15 @@ export default function App({direccion}) {
         size="lg"
         variant="outline"
         onClick={() => {
-          changePage("Panoramica")
+          page === "App" || page === "App2" || page === "App3" || page === "App4"
+            ? changePage("Panoramica")
+            : page == "Nega"
+            ? changePage("Final")
+            : page == "Nega2"
+            ? changePage("Final2")
+            : page == "Nega3"
+            ? changePage("Final3")
+            : changePage("Final4")
         }}
       >
         Atrás
