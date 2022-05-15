@@ -13,7 +13,6 @@ import {
   VStack,
   Button,
   Container,
-  Link,
 } from "@chakra-ui/react"
 import {IconButton} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons"
@@ -32,49 +31,30 @@ export default function Procesada({imagen}) {
       backgroundRepeat="no-repeat"
       backgroundSize="cover"
       height="100vh"
-      justify="space-between"
       position="relative"
       width="100%"
     >
-      <HStack height="100%" justify="space-around" paddingTop="20px" width="100%">
-        <Text
-          color="#DDE5EA"
-          fontFamily="Lato"
-          fontSize="4xl"
-          fontWeight="300"
-          maxWidth="1000px"
-          textAlign="left"
-        >
-          DIAGNÓSTICO DENTAL
-        </Text>
-
-        <Link href={imagen.diagnostico.url} target="_blank">
-          <VStack>
-            <Image
-              boxShadow="0px 10px 15px 10px rgb(0 0 0 / 10%)"
-              maxHeight="600px"
-              //maxWidth="500px"
-              src={imagen.diagnostico.url}
-            />
-
-            <Text
-              color="#DDE5EA"
-              fontFamily="Lato"
-              fontSize="xl"
-              fontWeight="300"
-              maxWidth="1000px"
-              textAlign="left"
-            >
-              click para abrir el diagnóstico
-            </Text>
-          </VStack>
-        </Link>
-      </HStack>
+      <Container height="100%" maxW="4xl">
+        <VStack paddingTop="0" spacing="60px">
+          <Text
+            color="#75747F"
+            fontFamily="Lato"
+            fontSize="4xl"
+            fontWeight="300"
+            marginTop="90px"
+            maxWidth="950px"
+            textAlign="left"
+          >
+            PROCESAMIENTO DE LA PANTOMOGRAFÍA
+          </Text>
+          <Image boxShadow="0px 10px 15px 10px rgb(0 0 0 / 10%)" src={imagen.procesada.url} />
+        </VStack>
+      </Container>
       <HStack
         justify="flex-start"
         paddingBottom="20px"
         paddingLeft="50px"
-        paddingTop="20px"
+        paddingTop="40px"
         position="relative"
         spacing="20px"
         width="100%"
@@ -83,9 +63,24 @@ export default function Procesada({imagen}) {
           aria-label="Search database"
           icon={<ArrowBackIcon />}
           onClick={() => {
-            changePage("Procesada")
+            changePage("Negatoscopio")
           }}
         />
+        <Button
+          colorScheme="gray"
+          fontFamily="Lato"
+          fontSize="xl"
+          fontWeight="300"
+          height="40px"
+          size="sm"
+          textColor="#75747F"
+          variant="solid"
+          onClick={() => {
+            changePage("Diagnostico")
+          }}
+        >
+          DIAGNÓSTICO
+        </Button>
       </HStack>
     </VStack>
   )

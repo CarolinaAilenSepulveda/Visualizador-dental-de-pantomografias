@@ -19,7 +19,8 @@ import Bienvenida from "./Bienvenida"
 import Panoramica from "./Panoramica"
 import Final from "./Final"
 import Diagnostico from "./Diagnostico"
-
+import Menu from "./Menu"
+import imagenes from "./App"
 export default function Orden() {
   const page = usePage()
 
@@ -29,7 +30,7 @@ export default function Orden() {
     <>
       {page == "Bienvenida" && <Bienvenida />}
       {page == "Panoramica" && <Panoramica />}
-      {page == "Final" && <Final imagen={foto2} />}
+      {page == "Final" && <Menu imagenes={imagenes} />}
       {page == "App" && <App direccion={foto1} />}
       {page == "Nega" && <App direccion={foto2} />}
       {page == "Nega2" && <App direccion={foto4} />}
@@ -48,3 +49,4 @@ export default function Orden() {
     </>
   )
 }
+//Final imagen={foto2}

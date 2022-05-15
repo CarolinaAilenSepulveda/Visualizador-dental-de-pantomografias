@@ -15,26 +15,28 @@ import {
   Button,
   Container,
 } from "@chakra-ui/react"
-
+import {IconButton} from "@chakra-ui/react"
+import {ArrowBackIcon} from "@chakra-ui/icons"
 //Importo imagen de la carpeta assets, solo cambio el nombre para elegir una panorámica
 import axios from "axios"
+import {useEffect} from "react/cjs/react.production.min"
 
 import imagen from "../assets/foto1.png"
+import ola2 from "../assets/wave2.svg"
 
 import {usePage, useChangePage} from "./Hooks"
-import Menu from "./Menu"
 
 //Armado escena
 //Acomodo color de fondo, intensidad, angulo y posición de la luz estándar, posición estándar del cilindro
 //Centro el cilindro en el medio de la escena
 
-export default function App({direccion}) {
+export default function Negatoscopio({imagenSeleccionada, setImagenSeleccionada}) {
   const [radioSup, setRadioSup] = React.useState(2) //Estado radio superior
   const [update, setUpdate] = React.useState(false) //Renovación de estado
   const [radioInf, setRadioInf] = React.useState(2) //Estado radio inferior
   const [imagenes, setImagenes] = React.useState([]) //Estado de imagen
   const [loadImage, setLoadImage] = React.useState(false) //Cargar imagenes
-  const [imagenseleccionada, setImagenseleccionada] = React.useState("") //Estado para ir modificando sobre el cilindro
+  //const [imagenseleccionada, setImagenseleccionada] = React.useState("") //Estado para ir modificando sobre el cilindro
   const [fsepia, setFSepia] = React.useState(0) //Setear valor de sepia
   const [fbyn, setFbyn] = React.useState(0) //Setear valor de byn
   const [finversion, setFinversion] = React.useState(0) //Setear valor de inversión
@@ -43,8 +45,7 @@ export default function App({direccion}) {
   //Armado del cilindro
   function Cilindro(props) {
     const ref = useRef()
-    const texture = useTexture(imagenseleccionada == "" ? imagen : imagenseleccionada) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
-    //const texture = useTexture(direccion)
+    const texture = useTexture(imagenSeleccionada.original.url) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
 
     useFrame(() => {
       //Para que solo rote en un sentido, para más rapidez aumentar 0.004
@@ -60,18 +61,6 @@ export default function App({direccion}) {
       </mesh>
     )
   }
-
-  React.useEffect(() => {
-    if (!loadImage) {
-      axios
-        .get("https://dientes-sepulveda.herokuapp.com/pantomografias") //URL base de datos
-        .then((imagenes) => {
-          setImagenes(imagenes.data)
-          setLoadImage(true)
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loadImage])
 
   //Función actualizar radio superior
   const actualizarRadioSup = (num) => {
@@ -105,28 +94,17 @@ export default function App({direccion}) {
   const page = usePage()
   const changePage = useChangePage()
 
-  console.log(page)
-
-  //Función efecto de actualizar
-  React.useEffect(() => {
-    if (update) {
-      setUpdate(false)
-    }
-  }, [update])
-
-  /*
-    hola.map((elem) => (
-      <Image key={elem.id} src={elem.imagen} />
-    ))
-  */
-
   return (
     <div
       style={{
         width: "100%",
-        backgroundColor: "lightblue",
+        background: `url(${ola2})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
         height: "100vh",
         position: "relative",
+        display: "flex",
+        flexDirection: "column",
       }}
       //sepia(100%), grayscale,contrast,hue-rotate(90deg),opacity(30%)"invert(200%)",saturate,filter: "contrast(200%) brightness(150%)",
     >
@@ -159,13 +137,12 @@ export default function App({direccion}) {
           />
         </Canvas>
       </div>
-
       <Loader />
       <Container maxW="container.xl">
-        <div style={{position: "absolute", top: 90, right: 10, width: 100}}>
+        <div style={{position: "absolute", top: 60, left: 80, width: 150}}>
           <Slider
             aria-label="slider-ex-2" //Primer subidor, superior
-            colorScheme="pink"
+            colorScheme="blue"
             defaultValue={2.5}
             max={4}
             min={1}
@@ -179,7 +156,7 @@ export default function App({direccion}) {
           </Slider>
         </div>
 
-        <div style={{position: "absolute", top: 90, left: 10, width: 100}}>
+        <div style={{position: "absolute", top: 130, left: 80, width: 150}}>
           <Slider
             aria-label="slider-ex-2" //Segundo subidor, inferior
             colorScheme="blue"
@@ -196,13 +173,13 @@ export default function App({direccion}) {
           </Slider>
         </div>
 
-        <div style={{position: "absolute", top: 200, left: 10, width: 100}}>
-          <Box as="span" fontSize="lg" fontWeight="bold">
-            Sepia
+        <div style={{position: "absolute", top: 250, left: 80, width: 150}}>
+          <Box color="#198BC8" fontFamily="Lato" fontSize="xl" fontWeight="300">
+            SEPIA
           </Box>
           <Slider
             aria-label="slider-ex-2" //Subidor sepia
-            colorScheme="green"
+            colorScheme="blue"
             defaultValue={0}
             max={100}
             min={0}
@@ -215,13 +192,13 @@ export default function App({direccion}) {
             <SliderThumb />
           </Slider>
         </div>
-        <div style={{position: "absolute", top: 300, left: 10, width: 100}}>
-          <Box as="span" fontSize="lg" fontWeight="bold">
-            Escala grises
+        <div style={{position: "absolute", top: 350, left: 80, width: 150}}>
+          <Box color="#198BC8" fontFamily="Lato" fontSize="xl" fontWeight="300">
+            GRISES
           </Box>
           <Slider
             aria-label="slider-ex-2" //Subidor byn
-            colorScheme="green"
+            colorScheme="blue"
             defaultValue={0}
             max={100}
             min={0}
@@ -234,13 +211,13 @@ export default function App({direccion}) {
             <SliderThumb />
           </Slider>
         </div>
-        <div style={{position: "absolute", top: 400, left: 10, width: 100}}>
-          <Box as="span" fontSize="lg" fontWeight="bold">
-            Inversión
+        <div style={{position: "absolute", top: 450, left: 80, width: 150}}>
+          <Box color="#198BC8" fontFamily="Lato" fontSize="xl" fontWeight="300">
+            INVERTIDO
           </Box>
           <Slider
             aria-label="slider-ex-2" //Subidor inversión
-            colorScheme="green"
+            colorScheme="blue"
             defaultValue={0}
             max={100}
             min={0}
@@ -253,13 +230,13 @@ export default function App({direccion}) {
             <SliderThumb />
           </Slider>
         </div>
-        <div style={{position: "absolute", top: 500, left: 10, width: 100}}>
-          <Box as="span" fontSize="lg" fontWeight="bold">
-            Hue-rotate
+        <div style={{position: "absolute", top: 550, left: 80, width: 150}}>
+          <Box color="#198BC8" fontFamily="Lato" fontSize="xl" fontWeight="300">
+            COLOR
           </Box>
           <Slider
             aria-label="slider-ex-2" //Subidor hue
-            colorScheme="green"
+            colorScheme="blue"
             defaultValue={0}
             max={360}
             min={0}
@@ -272,44 +249,53 @@ export default function App({direccion}) {
             <SliderThumb />
           </Slider>
         </div>
-
-        <div style={{position: "absolute", top: 10, right: 10, width: 100}}>
-          <Center bg="hotpink" color="white" h="60px" w="80px">
-            <Box as="span" fontSize="lg" fontWeight="bold">
-              Radio superior
+        <div style={{position: "absolute", top: 10, left: 100, width: 100}}>
+          <Center color="#75747F" h="60px" w="80px">
+            <Box fontFamily="Lato" fontSize="2xl" fontWeight="300">
+              SUPERIOR
             </Box>
           </Center>
         </div>
-        <div style={{position: "absolute", top: 10, left: 10, width: 100}}>
-          <Center bg="blue" color="white" h="60px" w="80px">
-            <Box as="span" fontSize="lg" fontWeight="bold">
-              Radio inferior
+        <div style={{position: "absolute", top: 80, left: 100, width: 100}}>
+          <Center color="#75747F" h="60px" w="80px">
+            <Box fontFamily="Lato" fontSize="2xl" fontWeight="300">
+              INFERIOR
             </Box>
           </Center>
         </div>
       </Container>
-
-      <Button
-        bottom={20}
-        colorScheme="teal"
-        position="absolute"
-        right={10}
-        size="lg"
-        variant="outline"
-        onClick={() => {
-          page === "App" || page === "App2" || page === "App3" || page === "App4"
-            ? changePage("Panoramica")
-            : page == "Nega"
-            ? changePage("Final")
-            : page == "Nega2"
-            ? changePage("Final2")
-            : page == "Nega3"
-            ? changePage("Final3")
-            : changePage("Final4")
-        }}
+      <HStack
+        justify="flex-start"
+        paddingBottom="20px"
+        paddingLeft="50px"
+        paddingTop="40px"
+        position="relative"
+        spacing="20px"
+        width="100%"
       >
-        Atrás
-      </Button>
+        <IconButton
+          aria-label="Search database"
+          icon={<ArrowBackIcon />}
+          onClick={() => {
+            changePage("Menu")
+          }}
+        />
+        <Button
+          colorScheme="gray"
+          fontFamily="Lato"
+          fontSize="xl"
+          fontWeight="300"
+          height="40px"
+          size="sm"
+          textColor="#75747F"
+          variant="solid"
+          onClick={() => {
+            changePage("Procesada")
+          }}
+        >
+          PROCESAR
+        </Button>
+      </HStack>
     </div>
   )
 }

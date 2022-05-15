@@ -14,6 +14,11 @@ import {
   Button,
   Container,
 } from "@chakra-ui/react"
+import {IconButton} from "@chakra-ui/react"
+import {ArrowForwardIcon} from "@chakra-ui/icons"
+
+import fondo from "../assets/fondo.jpg"
+import fondo2 from "../assets/ejemplo.jpg"
 
 import {usePage, useChangePage} from "./Hooks"
 
@@ -27,37 +32,63 @@ export default function Bienvenida() {
     <div
       style={{
         width: "100%",
-        backgroundColor: "lightblue",
+        background: `url(${fondo2})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        //backgroundColor: "lightblue",
         height: "100vh",
-        position: "relative",
+        position: "absolute",
       }}
     >
-      <Container height="100%" maxW="8xl">
-        <VStack paddingTop="100" spacing="30px">
-          <Text color="green.500" fontFamily="monospace" fontSize="5xl">
-            Diagnóstico de pantomografías mediante el uso de inteligencia artificial y aprendizaje
-            profundo
-          </Text>
-          <Text color="teal" fontFamily="monospace" fontSize="3xl">
-            Proyecto en desarrolo de un dispositivo para el diagnóstico automático y visualización
-            de radiografías panorámicas.
-          </Text>
-          <Text color="teal" fontFamily="monospace" fontSize="3xl">
-            Creado por un equipo interdisciplinario con investigadores Conicet y el Departamento de
-            Ingeniería Eléctrica y Computadoras de la Universidad del Sur, supervisado por
-            especialistas en diagnóstico por imágenes bucomaxilofacial de la Universidad de Bs As.
-          </Text>
-          <Button
-            colorScheme="teal"
-            size="lg"
-            onClick={() => {
-              changePage("Panoramica")
-            }}
+      <VStack align="left" height="100%" justify="space-between" margin="auto" maxWidth="8xl">
+        <VStack align="left" paddingTop="50" spacing="40px">
+          <Text
+            color="#000080"
+            fontFamily="Lato"
+            fontSize="4xl"
+            fontWeight="300"
+            maxWidth="950px"
+            textAlign="left"
           >
-            Siguiente
-          </Button>
+            DIAGNÓSTICO DE PANTOMOGRAFÍAS CON INTELIGENCIA ARTIFICIAL Y APRENDIZAJE PROFUNDO
+          </Text>
+          <Text
+            color="#000000"
+            fontFamily="Lato"
+            fontSize="3xl"
+            fontWeight="300"
+            marginLeft="0"
+            maxWidth="600px"
+            textAlign="center"
+          >
+            Proyecto en desarrolo de un dispositivo para diagnóstico automático y visualización de
+            radiografías panorámicas
+          </Text>
         </VStack>
-      </Container>
+        <HStack align="left" justify="space-between" paddingBottom="20px" paddingTop="40">
+          <IconButton
+            aria-label="Search database"
+            icon={<ArrowForwardIcon />}
+            marginTop="90px"
+            onClick={() => {
+              changePage("Menu")
+            }}
+          />
+
+          <Text
+            border="1px dotted #75747F"
+            color="#75747F"
+            fontFamily="Arial"
+            fontSize="xl"
+            marginTop="30px"
+            maxWidth="700px"
+          >
+            Creado por un equipo interdisciplinario con investigadores CONICET y el Departamento de
+            Ingeniería Eléctrica y Computadoras de la UNS, supervisado por especialistas en
+            diagnóstico por imágenes bucomaxilofacial de la UBA
+          </Text>
+        </HStack>
+      </VStack>
     </div>
   )
 }
