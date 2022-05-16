@@ -1,19 +1,8 @@
+//Librerias y componentes
+
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
-import {
-  Center,
-  Box,
-  HStack,
-  Image,
-  Text,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  VStack,
-  Button,
-  Container,
-} from "@chakra-ui/react"
+import {HStack, Image, Text, VStack, Button, Container} from "@chakra-ui/react"
 import {IconButton} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons"
 
@@ -24,6 +13,8 @@ import {usePage, useChangePage} from "./Hooks"
 export default function Procesada({imagen}) {
   const page = usePage()
   const changePage = useChangePage()
+
+  //Esta pantalla muestra la imagen de la pantomografía procesada, mediante la base de datos
 
   return (
     <VStack

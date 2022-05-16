@@ -1,20 +1,8 @@
+//Librerias y componentes
+
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
-import {useTexture, Loader, OrbitControls} from "@react-three/drei"
-import {
-  Center,
-  Box,
-  HStack,
-  Image,
-  Text,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  VStack,
-  Button,
-  Container,
-} from "@chakra-ui/react"
+import {HStack, Image, Text, VStack} from "@chakra-ui/react"
 import {IconButton} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons"
 
@@ -24,6 +12,9 @@ import {useChangePage} from "./Hooks"
 import {HStackContainer} from "./styles"
 const Menu = ({imagenes, setImagenSeleccionada}) => {
   const changePage = useChangePage()
+
+  //En esta pantalla tenemos el menú de pantomografías desde la base y se las configura como
+  //botones, para al hacer click que se coloque como textura del negatoscopio
 
   return (
     //Seleccionador de radiografia

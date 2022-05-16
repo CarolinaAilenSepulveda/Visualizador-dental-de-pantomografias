@@ -1,3 +1,5 @@
+//Librerias y componentes
+
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
 import {useTexture, Loader, OrbitControls} from "@react-three/drei"
@@ -5,23 +7,16 @@ import {
   Center,
   Box,
   HStack,
-  Image,
-  Text,
   Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
-  VStack,
   Button,
   Container,
 } from "@chakra-ui/react"
 import {IconButton} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons"
-//Importo imagen de la carpeta assets, solo cambio el nombre para elegir una panorámica
-import axios from "axios"
-import {useEffect} from "react/cjs/react.production.min"
 
-import imagen from "../assets/foto1.png"
 import ola2 from "../assets/wave2.svg"
 
 import {usePage, useChangePage} from "./Hooks"
@@ -36,16 +31,15 @@ export default function Negatoscopio({imagenSeleccionada, setImagenSeleccionada}
   const [radioInf, setRadioInf] = React.useState(2) //Estado radio inferior
   const [imagenes, setImagenes] = React.useState([]) //Estado de imagen
   const [loadImage, setLoadImage] = React.useState(false) //Cargar imagenes
-  //const [imagenseleccionada, setImagenseleccionada] = React.useState("") //Estado para ir modificando sobre el cilindro
   const [fsepia, setFSepia] = React.useState(0) //Setear valor de sepia
   const [fbyn, setFbyn] = React.useState(0) //Setear valor de byn
-  const [finversion, setFinversion] = React.useState(0) //Setear valor de inversión
-  const [fhue, setFhue] = React.useState(0) //Setear valor de hue
+  const [finversion, setFinversion] = React.useState(0) //Setear valor de inversión/color
+  const [fhue, setFhue] = React.useState(0) //Setear valor de hue-rotate
 
   //Armado del cilindro
   function Cilindro(props) {
     const ref = useRef()
-    const texture = useTexture(imagenSeleccionada.original.url) //Si imagen seleccionada esta vacía usa por defecto imagen, sino la cambia
+    const texture = useTexture(imagenSeleccionada.original.url) //Emplea la componente original.url del elemento de la colección
 
     useFrame(() => {
       //Para que solo rote en un sentido, para más rapidez aumentar 0.004
@@ -106,7 +100,6 @@ export default function Negatoscopio({imagenSeleccionada, setImagenSeleccionada}
         display: "flex",
         flexDirection: "column",
       }}
-      //sepia(100%), grayscale,contrast,hue-rotate(90deg),opacity(30%)"invert(200%)",saturate,filter: "contrast(200%) brightness(150%)",
     >
       <div
         style={{
@@ -130,9 +123,9 @@ export default function Negatoscopio({imagenSeleccionada, setImagenSeleccionada}
           </Suspense>
 
           <OrbitControls //Hasta donde puede rotar el cilindro, en y no rota
-            maxAzimuthAngle={1.5} //3
+            maxAzimuthAngle={1.5}
             maxPolarAngle={0}
-            minAzimuthAngle={-1.5} //0
+            minAzimuthAngle={-1.5}
             minPolarAngle={1.6}
           />
         </Canvas>
@@ -235,7 +228,7 @@ export default function Negatoscopio({imagenSeleccionada, setImagenSeleccionada}
             COLOR
           </Box>
           <Slider
-            aria-label="slider-ex-2" //Subidor hue
+            aria-label="slider-ex-2" //Subidor hue-rotate
             colorScheme="blue"
             defaultValue={0}
             max={360}

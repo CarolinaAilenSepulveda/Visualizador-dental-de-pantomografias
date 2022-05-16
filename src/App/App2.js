@@ -1,19 +1,7 @@
+//Librerias y componentes
+
 import React from "react"
-import {
-  Center,
-  Box,
-  HStack,
-  Image,
-  Text,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  VStack,
-  Button,
-  Container,
-  Spinner,
-} from "@chakra-ui/react"
+import {Center, Spinner} from "@chakra-ui/react"
 import axios from "axios"
 
 import {useChangePage, usePage} from "./Hooks"
@@ -22,6 +10,10 @@ import Menu from "./Menu"
 import Negatoscopio from "./Negatoscopio"
 import Procesada from "./Procesada"
 import Diagnostico from "./Diagnostico"
+
+//Desde App2 se deciden los cambios de pantalla y que elemento se le pasa como parámetro
+//a cada pantalla
+
 const App2 = () => {
   const page = usePage()
   const changePage = useChangePage()
@@ -29,10 +21,12 @@ const App2 = () => {
   const [loading, setLoading] = React.useState(true)
   const [imagenSeleccionada, setImagenSeleccionada] = React.useState()
 
+  //Se suma un loading mientras carga la base de datos - spinner
+
   React.useEffect(() => {
     if (!imagenes && loading) {
       axios
-        .get("https://dientes-sepulveda.herokuapp.com/pantomografias") //URL base de datos
+        .get("https://dientes-sepulveda.herokuapp.com/pantomografias") //URL base de datos, cada elemento de la colección tiene una foto original, procesada, nombre y diagnóstico
         .then((imagenes) => {
           setImagenes(imagenes.data)
           setLoading(false)

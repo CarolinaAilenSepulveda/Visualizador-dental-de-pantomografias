@@ -1,20 +1,7 @@
+//Librerias
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
-import {
-  Center,
-  Box,
-  HStack,
-  Image,
-  Text,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  VStack,
-  Button,
-  Container,
-  Link,
-} from "@chakra-ui/react"
+import {Center, Box, VStack, HStack, Image, Text, Link} from "@chakra-ui/react"
 import {IconButton} from "@chakra-ui/react"
 import {ArrowBackIcon} from "@chakra-ui/icons"
 

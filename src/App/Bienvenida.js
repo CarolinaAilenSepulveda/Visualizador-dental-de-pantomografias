@@ -1,23 +1,11 @@
+//Librerias y componentes
+
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
-import {
-  Center,
-  Box,
-  HStack,
-  Image,
-  Text,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  VStack,
-  Button,
-  Container,
-} from "@chakra-ui/react"
+import {HStack, Text, VStack} from "@chakra-ui/react"
 import {IconButton} from "@chakra-ui/react"
 import {ArrowForwardIcon} from "@chakra-ui/icons"
 
-import fondo from "../assets/fondo.jpg"
 import fondo2 from "../assets/ejemplo.jpg"
 
 import {usePage, useChangePage} from "./Hooks"
@@ -26,7 +14,8 @@ export default function Bienvenida() {
   const page = usePage()
   const changePage = useChangePage()
 
-  console.log(page)
+  //Pantalla de inicio con la información del grupo y el proyecto
+  //La imagen es obtenida de una página web, no es propia
 
   return (
     <div
@@ -35,7 +24,6 @@ export default function Bienvenida() {
         background: `url(${fondo2})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        //backgroundColor: "lightblue",
         height: "100vh",
         position: "absolute",
       }}
