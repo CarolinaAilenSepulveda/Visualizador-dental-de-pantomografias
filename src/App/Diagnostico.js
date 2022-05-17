@@ -1,4 +1,5 @@
 //Librerias
+
 import React, {useRef, Suspense} from "react"
 import {Canvas, useFrame} from "@react-three/fiber"
 import {Center, Box, VStack, HStack, Image, Text, Link} from "@chakra-ui/react"
@@ -8,6 +9,9 @@ import {ArrowBackIcon} from "@chakra-ui/icons"
 import ola1 from "../assets/wave1.svg"
 
 import {usePage, useChangePage} from "./Hooks"
+
+//Esta pantalla muestra la imagen de diagnóstico y mediante link
+//nos redirigimos a la url de la base de datos (la imagen presentada en pantalla no se llega a leer)
 
 export default function Procesada({imagen}) {
   const page = usePage()
